@@ -33,3 +33,19 @@ Start the dummy hardware server in one terminal:
 ```
 /opt/cactus/bin/uhal/tests/DummyHardwareUdp.exe -p 50001 -v 2
 ```
+
+## Instrument Register Map
+
+A simplified example register map is shown below.
+
+|      Address | Node                | Permission | Description                 |
+| -----------: | ------------------- | ---------- | --------------------------- |
+| `0x00000000` | `REG.ID`            | `rw`       | Instrument ID               |
+| `0x00000001` | `REG.CTRL`          | `rw`       | Control register            |
+| `0x00000002` | `REG.STATUS`        | `r`        | Status register             |
+| `0x00000003` | `REG.CHANNEL_MASK`  | `rw`       | Channel enable mask         |
+| `0x00000004` | `REG.SAMPLE_PERIOD` | `rw`       | Sample period configuration |
+| `0x00000005` | `REG.NUM_CHANNELS`  | `rw`       | Number of active channels   |
+| `0x00001000` | `FIFO.DATA`         | `rw`       | FIFO data port              |
+| `0x00001001` | `FIFO.COUNT`        | `r`        | FIFO word count             |
+| `0x00001002` | `FIFO.STATUS`       | `r`        | FIFO status flags           |
