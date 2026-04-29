@@ -25,6 +25,15 @@ The simulated instrument includes:
 The FIFO word format is:
 
 ```text
+
+---
+
 bit[31:24] = channel ID
 bit[15:0]  = sample or ADC value
+```
+## Running with the IPbus Dummy UDP Server
 
+Start the dummy hardware server in one terminal:
+```
+/opt/cactus/bin/uhal/tests/DummyHardwareUdp.exe -p 50001 -v 2
+```
