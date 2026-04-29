@@ -23,11 +23,7 @@ The simulated instrument includes:
 - CLI test script for FIFO validation.
 
 The FIFO word format is:
-
-```text
-
----
-
+```
 bit[31:24] = channel ID
 bit[15:0]  = sample or ADC value
 ```
