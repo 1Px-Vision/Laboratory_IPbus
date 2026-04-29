@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<node id="TOP">
+
+  <!-- Global control register -->
+  <node id="CTRL" address="0x00000000" permission="rw">
+    <node id="ENABLE"  mask="0x00000001" description="Enable acquisition" />
+    <node id="RESET"   mask="0x00000002" description="Reset FIFO/instrument" />
+    <node id="TRIGGER" mask="0x00000004" description="Trigger one acquisition" />
+  </node>
+
+  <!-- Global status register -->
+  <node id="STATUS" address="0x00000001" permission="r">
+    <node id="READY"      mask="0x00000001" description="Instrument enabled/ready" />
+    <node id="FIFO_EMPTY" mask="0x00000002" description="FIFO empty flag" />
+    <node id="FIFO_FULL"  mask="0x00000004" description="FIFO full flag" />
+  </node>
+
+  <!-- Configuration and counters -->
+  <node id="N_CHANNELS"   address="0x00000002" permission="r"  description="Number of simulated channels" />
+  <node id="SAMPLE_COUNT" address="0x00000003" permission="rw" description="Samples per acquisition trigger" />
+  <node id="FIFO_COUNT"   address="0x00000004" permission="r"  description="Number of words in the FIFO" />
+  <node id="GAIN"         address="0x00000005" permission="rw" description="Fixed-point gain, scale x1000" />
+  <node id="OFFSET"       address="0x00000006" permission="rw" description="ADC offset" />
+
+  <!-- Channel value memory/register block.
+       Incremental mode means each word maps to a different address. -->
+  <node id="CHANNELS"
+        address="0x00000100"
+        permission="rw"
+        mode="incremental"
+        size="16"
+        description="Last ADC value for each channel" />
+
+  <!-- FIFO data port.
+       Non-incremental mode means block reads/writes access the same address repeatedly,
+       which is the typical address-table representation of a FIFO data port. -->
+  <node id="FIFO" address="0x00001000">
+    <node id="DATA"
+          address="0x00000000"
+          permission="rw"
+          mode="non-incremental"
+          size="4096"
+          description="FIFO data port. Word format: [31:24]=channel, [15:0]=ADC value." />
+  </node>
+
+</node>
