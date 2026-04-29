@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<connections>
+  <!-- DUMMY UDP / IPbus endpoint -->
+  <connection id="dummy_test"
+              uri="ipbusudp-2.0://localhost:50001"
+              address_table="file://instrument_address.xml" />
+</connections>
