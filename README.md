@@ -49,3 +49,21 @@ A simplified example register map is shown below.
 | `0x00001000` | `FIFO.DATA`         | `rw`       | FIFO data port              |
 | `0x00001001` | `FIFO.COUNT`        | `r`        | FIFO word count             |
 | `0x00001002` | `FIFO.STATUS`       | `r`        | FIFO status flags           |
+
+### Notes About DummyHardwareUdp
+
+The IPbus dummy UDP server is useful for checking:
+
+IPbus connection files.
+XML address-table parsing.
+Basic register read/write access.
+Block read/write syntax.
+
+However, the dummy server may behave like a simple memory model, not a true hardware FIFO. In real FPGA firmware, the FIFO data node should be connected to logic that performs:
+
+FIFO push on write.
+FIFO pop on read.
+FIFO empty/full status generation.
+FIFO word count tracking.
+
+For a real FPGA design, the same XML mapping can be reused, but the firmware must implement the mapped registers and FIFO behavior.
