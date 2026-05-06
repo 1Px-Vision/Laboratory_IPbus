@@ -67,3 +67,10 @@ FIFO empty/full status generation.
 FIFO word count tracking.
 
 For a real FPGA design, the same XML mapping can be reused, but the firmware must implement the mapped registers and FIFO behavior.
+
+* FIFO data ports use mode="non-incremental" because multiple accesses must target the same hardware FIFO address.
+* FIFO control registers must be writable; ififocr and ofifocr should use permission="rw".
+* The FIFO status counters are stored in the upper 16 bits of the status register.
+* The output FIFO status field descriptions should refer to AFULL as almost full and FULL as full.
+* Register readback from oreg nodes depends on firmware support for readable output registers.
+* Reading ififo after writing ofifo only works if the firmware connects or loops the output FIFO to the input FIFO.
