@@ -208,3 +208,72 @@ Create a new firmware workspace:
 ipbb init myFwArea
 cd myFwArea
 ```
+
+### 5. Create the ZCU102 Vivado Project
+
+For the ZCU102 evaluation board, the board target is:
+```bash
+zcu102_basex
+```
+Create the Vivado project using the ZCU102 dependency file:
+
+```bash
+ipbb proj create vivado -t top_zcu102_basex.dep zcu102_basex ipbus-firmware:projects/example
+```
+
+Enter the generated project directory:
+```bash
+cd proj/zcu102_basex
+```
+
+### 6. Generate the Vivado Project
+
+Run:
+```bash
+ipbb vivado make-project
+```
+
+### 7. Run Synthesis, Implementation, and Packaging
+
+Run synthesis and implementation:
+```bash
+ipbb vivado synth -j4 impl -j4
+```
+Package the generated bitstream and address table:
+
+```bash
+ipbb vivado package
+```
+
+After a successful build, the generated bitstream is located in:
+
+```bash
+package/src/top.bit
+```
+
+### 8. Configure the ZCU102 Ethernet Address
+
+For Ethernet-based IPbus designs, the board IP and MAC address are configured in the top-level VHDL file of the selected board design. Before generating the final bitstream, check the ZCU102 top-level firmware file and adjust the IP/MAC address if required by the local network.
+
+A typical IPbus UDP endpoint has the form:
+
+```bash
+ipbusudp-2.0://192.168.200.16:50001
+```
+Depending on the board DIP-switch configuration and the local network setup, the IP address may need to be changed before building or testing the firmware.
+
+### 9. Test IPbus Communication
+
+After programming the board, first check that the board responds to ICMP:
+```bash
+ping -c 10 192.168.200.16
+```
+Then test IPbus communication using uHAL and the IPbus example address table:
+```bash
+python read_write_single_register_without_connection_file.py \
+  ipbusudp-2.0://192.168.200.16:50001 \
+  file://ipbus_example.xml \
+  reg
+```
+
+
