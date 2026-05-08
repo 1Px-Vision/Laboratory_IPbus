@@ -157,3 +157,54 @@ For a real FPGA design, the same XML mapping can be reused, but the firmware mus
 * The output FIFO status field descriptions should refer to AFULL as almost full and FULL as full.
 * Register readback from oreg nodes depends on firmware support for readable output registers.
 * Reading ififo after writing ofifo only works if the firmware connects or loops the output FIFO to the input FIFO.
+
+## Hardware Implementation on Xilinx ZCU102 Evaluation Board
+
+This project can be implemented on the **Xilinx ZCU102 evaluation board** using the IPbus firmware example design. The ZCU102 design is part of the IPbus Ethernet-based example designs and uses the IPbus firmware build tool, **IPBB**, together with **Vivado** to generate the FPGA bitstream.
+
+### Target Board
+
+| Item | Configuration |
+|---|---|
+| FPGA board | Xilinx ZCU102 evaluation board |
+| FPGA device | Zynq UltraScale+ MPSoC `xczu9eg` |
+| IPbus board target | `zcu102_basex` |
+| Top dependency file | `top_zcu102_basex.dep` |
+| Vivado version used | Vivado 2022.2 |
+| Vivado path | `/opt/Xilinx/Vivado/2022.2` |
+| Firmware repository | `ipbus/ipbus-firmware` |
+| IPbus firmware branch | `v1.16` |
+
+### 1. Install Required Packages
+
+For Ubuntu, Debian, or MATE terminal environments, install Python, pip, and virtual environment support using `apt`:
+
+```bash
+sudo apt update
+sudo apt install -y python3-pip python3-venv python3-virtualenv git curl
+```
+### 2. Load the Vivado Environment
+
+Before running any IPBB Vivado command, source the Vivado environment:
+
+```bash
+source /opt/Xilinx/Vivado/2022.2/settings64.sh
+```
+
+### 3. Install and Activate IPBB
+
+Download and activate IPBB version 0.5.2:
+
+```bash
+curl -L https://github.com/ipbus/ipbb/archive/v0.5.2.tar.gz | tar xvz
+source ipbb-0.5.2/env.sh
+```
+
+### 4. Create the IPbus Firmware Workspace
+
+Create a new firmware workspace:
+
+```bash
+ipbb init myFwArea
+cd myFwArea
+```
